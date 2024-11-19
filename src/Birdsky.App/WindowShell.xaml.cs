@@ -3,6 +3,9 @@ using Birdsky.Infrastructure;
 using MZikmund.Toolkit.WinUI.Infrastructure;
 using Birdsky.Infrastructure;
 using Windows.Foundation.Metadata;
+using Birdsky.Services.Navigation;
+using Birdsky.Core.Infrastructure;
+using Birdsky.App;
 
 namespace Birdsky;
 
@@ -19,12 +22,7 @@ public sealed partial class WindowShell : Page, IWindowShell
 		_windowScope = serviceProvider.CreateScope();
 		var windowShellProvider = (WindowShellProvider)ServiceProvider.GetRequiredService<IWindowShellProvider>();
 		windowShellProvider.SetShell(this, associatedWindow);
-		ServiceProvider.GetRequiredService<INavigationService>().RegisterViewsFromAssembly(typeof(Birdsky.App).Assembly);
-		ServiceProvider.GetRequiredService<IDialogService>().RegisterDialogsFromAssembly(typeof(Birdsky.App).Assembly);
-
-		var settings = ServiceProvider.GetRequiredService<IAppPreferences>();
-		var themeService = ServiceProvider.GetRequiredService<IThemeManager>();
-		themeService.SetTheme(settings.Theme);
+		ServiceProvider.GetRequiredService<INavigationService>().RegisterViewsFromAssembly(typeof(Birdsky.App.App).Assembly);
 
 		ViewModel = ServiceProvider.GetRequiredService<WindowShellViewModel>();
 

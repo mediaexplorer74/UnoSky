@@ -38,4 +38,10 @@
     <ItemGroup>
       <ProjectReference Include="..\Birdsky.Core\Birdsky.Core.csproj" />
     </ItemGroup>
+
+    <ItemGroup>
+      <Page Update="Views\MainView.xaml">
+        <Generator>MSBuild:Compile</Generator>
+      </Page>
+    </ItemGroup>
 </Project>
