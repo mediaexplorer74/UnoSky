@@ -1,6 +1,14 @@
+using Birdsky.Core.Infrastructure;
+using Birdsky.Core.ViewModels;
+using Birdsky.Infrastructure;
+using Birdsky.Services.Navigation;
+using CommunityToolkit.Mvvm.DependencyInjection;
+using MZikmund.Toolkit.WinUI.Infrastructure;
+using System.Data.Common;
 using Uno.Resizetizer;
 
 namespace Birdsky.App;
+
 public partial class App : Application
 {
     /// <summary>
@@ -13,7 +21,7 @@ public partial class App : Application
     }
 
     protected Window? MainWindow { get; private set; }
-    protected IHost? Host { get; private set; }
+    internal static IHost? Host { get; private set; }
 
     protected override void OnLaunched(LaunchActivatedEventArgs args)
     {
@@ -30,40 +38,47 @@ public partial class App : Application
                 )
                 // Enable localization (see appsettings.json for supported languages)
                 .UseLocalization()
-                .ConfigureServices((context, services) =>
-                {
-                    // TODO: Register your services
-                    //services.AddSingleton<IMyService, MyService>();
-                })
+                .ConfigureServices((context, services) => ConfigureServices(services))
             );
         MainWindow = builder.Window;
-
 #if DEBUG
         MainWindow.EnableHotReload();
 #endif
-        MainWindow.SetWindowIcon();
 
         Host = builder.Build();
+        Ioc.Default.ConfigureServices(Host.Services);
 
         // Do not repeat app initialization when the Window already has content,
         // just ensure that the window is active
-        if (MainWindow.Content is not Frame rootFrame)
+        if (MainWindow.Content is not WindowShell windowShell)
         {
             // Create a Frame to act as the navigation context and navigate to the first page
-            rootFrame = new Frame();
+            windowShell = new WindowShell(Host.Services, MainWindow);
 
             // Place the frame in the current Window
-            MainWindow.Content = rootFrame;
+            MainWindow.Content = windowShell;
         }
 
-        if (rootFrame.Content == null)
+        if (windowShell.RootFrame.Content is null)
         {
             // When the navigation stack isn't restored navigate to the first page,
             // configuring the new page by passing required information as a navigation
             // parameter
-            rootFrame.Navigate(typeof(MainPage), args.Arguments);
+            windowShell.ServiceProvider.GetRequiredService<INavigationService>().Navigate<MainViewModel>(args.Arguments);
         }
+
         // Ensure the current window is active
         MainWindow.Activate();
+    }
+
+    private void ConfigureServices(IServiceCollection services)
+    {
+        services.AddScoped<WindowShellViewModel>();
+
+        services.AddScoped<IFrameProvider, FrameProvider>();
+        services.AddScoped<INavigationService, NavigationService>();
+        services.AddScoped<IWindowShellProvider, WindowShellProvider>();
+
+        services.AddScoped<IXamlRootProvider, XamlRootProvider>();
     }
 }

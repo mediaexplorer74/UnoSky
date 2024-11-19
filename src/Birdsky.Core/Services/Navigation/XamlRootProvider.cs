@@ -1,6 +1,6 @@
 using MZikmund.Toolkit.WinUI.Infrastructure;
 
-namespace Birdsky.Infrastructure;
+namespace Birdsky.Services.Navigation;
 
 public class XamlRootProvider : IXamlRootProvider
 {
