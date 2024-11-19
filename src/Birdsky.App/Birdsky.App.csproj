@@ -1,6 +1,6 @@
-<Project Sdk="Uno.Sdk">
+﻿<Project Sdk="Uno.Sdk">
     <PropertyGroup>
-        <TargetFrameworks>net8.0-android;net8.0-ios;net8.0-maccatalyst;net8.0-windows10.0.26100;net8.0-browserwasm;net8.0-desktop</TargetFrameworks>
+        <TargetFrameworks>net9.0-android;net9.0-ios;net9.0-maccatalyst;net9.0-windows10.0.26100;net9.0-browserwasm;net9.0-desktop</TargetFrameworks>
 
         <OutputType>Exe</OutputType>
         <UnoSingleProject>true</UnoSingleProject>
@@ -16,7 +16,7 @@
         <ApplicationPublisher>Birdsky</ApplicationPublisher>
         <!-- Package Description -->
         <Description>Birdsky.App powered by Uno Platform.</Description>
-        
+
         <UnoFeatures>
             Hosting;
             Mvvm;
@@ -26,4 +26,22 @@
         </UnoFeatures>
     </PropertyGroup>
 
+    <ItemGroup>
+        <PackageReference Include="CommunityToolkit.WinUI.Controls.SettingsControls" />
+        <PackageReference Include="CommunityToolkit.WinUI.Converters" />
+        <PackageReference Include="CommunityToolkit.WinUI.Helpers" />
+        <PackageReference Include="LiteDB" />
+        <PackageReference Include="MZikmund.Toolkit.WinUI" />
+        <PackageReference Include="Plugin.InAppBilling" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Birdsky.Core\Birdsky.Core.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Page Update="Views\MainView.xaml">
+        <Generator>MSBuild:Compile</Generator>
+      </Page>
+    </ItemGroup>
 </Project>
