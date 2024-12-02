@@ -64,7 +64,7 @@ public partial class App : Application
             // When the navigation stack isn't restored navigate to the first page,
             // configuring the new page by passing required information as a navigation
             // parameter
-            windowShell.ServiceProvider.GetRequiredService<INavigationService>().Navigate<MainViewModel>(args.Arguments);
+            windowShell.ServiceProvider.GetRequiredService<INavigationService>().Navigate<LoginViewModel>(args.Arguments);
         }
 
         // Ensure the current window is active
@@ -74,8 +74,9 @@ public partial class App : Application
     private void ConfigureServices(IServiceCollection services)
     {
         services.AddScoped<WindowShellViewModel>();
+        services.AddScoped<LoginViewModel>();
 
-        services.AddScoped<IFrameProvider, FrameProvider>();
+		services.AddScoped<IFrameProvider, FrameProvider>();
         services.AddScoped<INavigationService, NavigationService>();
         services.AddScoped<IWindowShellProvider, WindowShellProvider>();
 
