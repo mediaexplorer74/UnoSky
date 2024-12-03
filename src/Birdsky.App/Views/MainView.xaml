@@ -17,7 +17,7 @@
 		<ListView SelectionMode="None" ItemsSource="{x:Bind ViewModel.Feed, Mode=OneWay}">
 			<ListView.ItemTemplate>
 				<DataTemplate x:DataType="vm:FeedItemViewModel">
-					<StackPanel Margin="4" Padding="8" Spacing="8" Background="{ThemeResource ButtonBackground}">
+					<StackPanel CornerRadius="8" Margin="8,4,8,4" Padding="8" Spacing="8" Background="{ThemeResource ButtonBackground}">
 						<TextBlock Text="{x:Bind Text}" TextWrapping="WrapWholeWords" />
 						<TextBlock Text="{x:Bind Author}" FontWeight="Bold" />
 						<StackPanel Orientation="Horizontal" Spacing="8">

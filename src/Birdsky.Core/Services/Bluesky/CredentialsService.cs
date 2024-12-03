@@ -8,15 +8,23 @@ public class CredentialsService : ICredentialsService
 {
 	private const string AppName = "Birdsky";
 
-	private readonly PasswordVault _passwordVault = new();
+	private readonly PasswordVault _passwordVault;
 	private readonly ApplicationDataContainer _localSettings = ApplicationData.Current.LocalSettings;
+
+	public CredentialsService()
+	{
+		if (ApiInformation.IsMethodPresent(typeof(PasswordCredential).FullName, "Retrieve"))
+		{
+			_passwordVault = new PasswordVault();
+		}
+	}
 
 	public (string? handle, string? appPassword) RetrieveCredentials()
 	{
 		string? appPassword = null;
 		if (_localSettings.Values.TryGetValue("UserHandle", out var value) && value is string handle)
 		{
-			if (ApiInformation.IsTypePresent(typeof(PasswordCredential).FullName))
+			if (_passwordVault is not null)
 			{
 				var credential = _passwordVault.Retrieve(AppName, handle);
 				appPassword = credential.Password;
@@ -35,7 +43,7 @@ public class CredentialsService : ICredentialsService
 	public void SaveCredentials(string handle, string appPassword)
 	{
 		_localSettings.Values["UserHandle"] = handle;
-		if (ApiInformation.IsTypePresent(typeof(PasswordCredential).FullName))
+		if (_passwordVault is not null)
 		{
 			_passwordVault.Add(new PasswordCredential(AppName, handle, appPassword));
 		}
