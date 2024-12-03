@@ -16,5 +16,7 @@ public interface IBlueskyService
 
 	Task<bool> LoginAsync(string handle, string appPassword);
 
+	Task PostAsync(string message);
+
 	Task<Result<GetTimelineOutput?>> GetTimelineAsync();
 }

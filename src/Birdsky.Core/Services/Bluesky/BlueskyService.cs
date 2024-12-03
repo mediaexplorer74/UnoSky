@@ -43,4 +43,9 @@ public class BlueskyService : IBlueskyService
 	}
 
 	public async Task<Result<GetTimelineOutput?>> GetTimelineAsync() => await _client.GetTimelineAsync();
+
+	public async Task PostAsync(string message)
+	{
+		await _client.CreatePostAsync(message);
+	}
 }

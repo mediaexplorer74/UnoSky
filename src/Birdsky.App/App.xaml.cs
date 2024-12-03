@@ -1,4 +1,5 @@
 using Birdsky.Core.Infrastructure;
+using Birdsky.Core.Services.Bluesky;
 using Birdsky.Core.ViewModels;
 using Birdsky.Infrastructure;
 using Birdsky.Services.Navigation;
@@ -75,11 +76,14 @@ public partial class App : Application
     {
         services.AddScoped<WindowShellViewModel>();
         services.AddScoped<LoginViewModel>();
+        services.AddScoped<MainViewModel>();
 
 		services.AddScoped<IFrameProvider, FrameProvider>();
         services.AddScoped<INavigationService, NavigationService>();
         services.AddScoped<IWindowShellProvider, WindowShellProvider>();
+        services.AddScoped<IBlueskyService, BlueskyService>();
+		services.AddSingleton<ICredentialsService, CredentialsService>();
 
-        services.AddScoped<IXamlRootProvider, XamlRootProvider>();
+		services.AddScoped<IXamlRootProvider, XamlRootProvider>();
     }
 }

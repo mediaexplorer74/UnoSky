@@ -50,7 +50,7 @@ public partial class LoginViewModel : PageViewModel
         }
 		finally
 		{
-			if (succeeded)
+			if (!succeeded)
 			{
 				// Handle login error
 				var dialog = new ContentDialog
