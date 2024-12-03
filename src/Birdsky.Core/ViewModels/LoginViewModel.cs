@@ -1,49 +1,68 @@
 using System.Reflection.Metadata;
+using Birdsky.Core.Services.Bluesky;
 using Birdsky.Services.Navigation;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using FishyFlip;
+using FishyFlip.Lexicon.App.Bsky.Feed;
 using FishyFlip.Models;
+using MZikmund.Toolkit.WinUI.Infrastructure;
 
 namespace Birdsky.Core.ViewModels;
 
 public partial class LoginViewModel : PageViewModel
 {
 	private readonly INavigationService _navigationService;
+	private readonly IBlueskyService _blueskyService;
+	private readonly IXamlRootProvider _xamlRootProvider;
+	[ObservableProperty]
+	private string _handle;
 
 	[ObservableProperty]
-	private string handle;
+	private string _appPassword;
 
-	[ObservableProperty]
-	private string appPassword;
-
-	public LoginViewModel(INavigationService navigationService) : base(navigationService)
+	public LoginViewModel(INavigationService navigationService, IBlueskyService blueskyService, IXamlRootProvider xamlRootProvider) : base(navigationService)
     {
 		_navigationService = navigationService;
+		_blueskyService = blueskyService;
+		_xamlRootProvider = xamlRootProvider;
 	}
 
 	[RelayCommand]
     private async Task LoginAsync()
     {
+		bool succeeded = false;
         try
         {
-            var client = new ATProtocolBuilder().EnableAutoRenewSession(true).Build();
-            var session = await client.AuthenticateWithPasswordAsync(Handle, AppPassword);
-
-            // Navigate to PostsView
-            _navigationService.Navigate<MainViewModel>(client);
+			if (await _blueskyService.LoginAsync(Handle, AppPassword))
+			{
+				succeeded = true;
+				_navigationService.Navigate<MainViewModel>();
+			}
+			else
+			{
+				succeeded = false;
+			}
         }
-        catch (Exception ex)
+        catch (Exception)
         {
-            //// Handle login error
-            //var dialog = new ContentDialog
-            //{
-            //    Title = "Login Failed",
-            //    Content = ex.Message,
-            //    CloseButtonText = "OK",
-            //    XamlRoot = App.MainWindow.Content.XamlRoot
-            //};
-            //await dialog.ShowAsync();
+			succeeded = false;
         }
+		finally
+		{
+			if (succeeded)
+			{
+				// Handle login error
+				var dialog = new ContentDialog
+				{
+					Title = "Login Failed",
+					Content = "Could not log in, please try again.",
+					CloseButtonText = "OK",
+					XamlRoot = _xamlRootProvider.XamlRoot,
+				};
+
+				await dialog.ShowAsync();
+			}
+		}
     }
 }

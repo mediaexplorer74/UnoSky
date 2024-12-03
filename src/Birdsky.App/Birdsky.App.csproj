@@ -17,6 +17,8 @@
         <!-- Package Description -->
         <Description>Birdsky.App powered by Uno Platform.</Description>
 
+		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+
         <UnoFeatures>
             Hosting;
             Mvvm;

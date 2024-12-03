@@ -35,8 +35,8 @@ public abstract partial class PageViewModel : ObservableRecipient
 	public void ViewNavigatedToInternal(object? parameter)
 	{
 		OnPropertyChanged(nameof(CanGoBack));
-		ViewNavigatedTo(parameter);
+		OnNavigatedTo(parameter);
 	}
 
-	public virtual void ViewNavigatedTo(object? parameter) { }
+	public virtual void OnNavigatedTo(object? parameter) { }
 }
