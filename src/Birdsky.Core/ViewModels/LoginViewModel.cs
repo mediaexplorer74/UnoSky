@@ -1,11 +1,7 @@
-using System.Reflection.Metadata;
 using Birdsky.Core.Services.Bluesky;
 using Birdsky.Services.Navigation;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using FishyFlip;
-using FishyFlip.Lexicon.App.Bsky.Feed;
-using FishyFlip.Models;
 using MZikmund.Toolkit.WinUI.Infrastructure;
 
 namespace Birdsky.Core.ViewModels;
@@ -22,7 +18,7 @@ public partial class LoginViewModel : PageViewModel
 	private string _appPassword;
 
 	public LoginViewModel(INavigationService navigationService, IBlueskyService blueskyService, IXamlRootProvider xamlRootProvider) : base(navigationService)
-    {
+	{
 		_navigationService = navigationService;
 		_blueskyService = blueskyService;
 		_xamlRootProvider = xamlRootProvider;
@@ -40,11 +36,11 @@ public partial class LoginViewModel : PageViewModel
 	}
 
 	[RelayCommand]
-    private async Task LoginAsync()
-    {
+	private async Task LoginAsync()
+	{
 		bool succeeded = false;
-        try
-        {
+		try
+		{
 			if (await _blueskyService.LoginAsync(Handle, AppPassword))
 			{
 				succeeded = true;
@@ -54,11 +50,11 @@ public partial class LoginViewModel : PageViewModel
 			{
 				succeeded = false;
 			}
-        }
-        catch (Exception)
-        {
+		}
+		catch (Exception)
+		{
 			succeeded = false;
-        }
+		}
 		finally
 		{
 			if (!succeeded)
@@ -75,5 +71,5 @@ public partial class LoginViewModel : PageViewModel
 				await dialog.ShowAsync();
 			}
 		}
-    }
+	}
 }

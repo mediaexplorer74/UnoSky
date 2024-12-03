@@ -6,7 +6,6 @@ namespace Birdsky.Core.Services.Bluesky;
 
 public class BlueskyService : IBlueskyService
 {
-	private const string ResourceName = "BlueskyClientSession";
 	private readonly ICredentialsService _credentialsService;
 	private ATProtocol _client;
 	private Session? _session;
