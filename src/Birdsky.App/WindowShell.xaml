@@ -21,8 +21,7 @@
             Height="48"
             Padding="16,0"
             Background="Transparent"
-            ColumnSpacing="16"
-            Visibility="{x:Bind HasCustomTitleBar}">
+            ColumnSpacing="16">
 			<Grid.ColumnDefinitions>
 				<ColumnDefinition Width="Auto" />
 				<ColumnDefinition Width="Auto" />
@@ -39,6 +38,6 @@
                 Text="{x:Bind ViewModel.Title}" />-->
 		</Grid>
 
-		<Frame x:Name="InnerFrame" Grid.Row="0" Grid.RowSpan="2" />
+		<Frame x:Name="InnerFrame" Grid.Row="1" Grid.RowSpan="2" />
 	</Grid>
 </Page>

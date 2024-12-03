@@ -28,6 +28,17 @@ public partial class LoginViewModel : PageViewModel
 		_xamlRootProvider = xamlRootProvider;
 	}
 
+	public override async void OnNavigatedTo(object? parameter)
+	{
+		base.OnNavigatedTo(parameter);
+		await _blueskyService.InitializeAsync();
+
+		if (_blueskyService.IsLoggedIn)
+		{
+			_navigationService.Navigate<MainViewModel>();
+		}
+	}
+
 	[RelayCommand]
     private async Task LoginAsync()
     {
