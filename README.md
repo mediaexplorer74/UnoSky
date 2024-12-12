@@ -1,7 +1,7 @@
 # UnoSky - main branch 
 ![](Images/logo.png)
 
-Simple multi-platform Bluesky client . Draft / Proto / Early bird
+Simple multi-platform Bluesky client (fork of Birdsky). Draft / Proto / Early bird.
 
 
 ## Architecture
@@ -51,3 +51,11 @@ I wanted to put down some thank you's here for folks/projects/websites that were
 
 ## License
 MIT License - see the [LICENSE](LICENSE) file for details.
+
+## ..
+As is. No support. Learn purposes only. DIY
+
+## .
+[m][e]
+
+December 2024
